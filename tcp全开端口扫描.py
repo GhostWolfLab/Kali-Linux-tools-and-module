@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding=UTF-8 -*-
 #TCP全开端口扫描
 import sys
 from scapy.all import *
@@ -15,7 +16,7 @@ if(str(type(resp))=="type 'NoneType'>"):#如果resp为空，使用str判断是�
 #判断是syn+ack，还是rst
 elif (resp.haslayer(TCP)):#haslayer判断是否tcp
     if(resp.getlayer(TCP).flags == 0x12):#使用getlayer读取字段,0x12表示syn+ack
-        sent_rst = sr(IP(dst=dst_ip)/TCP(sport=src_port,dport=dst_port,flags="AR"),timeout=10)#目标接收，发送ack数据包完成三次握手
+        send_rst = sr(IP(dst=dst_ip)/TCP(sport=src_port,dport=dst_port,flags="AR"),timeout=10)#目标接收，发送ack数据包完成三次握手
         print "the port %s is open" %(dst_port)
     elif (resp.getlayer(TCP).flags == 0x14):#如果不是0x12,而是0x14也就是rst，表明端口是关闭的
         print "the port %s is closed" %(dst_port)
